@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Andy Tu — AI Portfolio</title>
+  <meta name="description" content="Selected AI film, influencer, and creative tech experiments by Andy Tu." />
+  <style>
+    :root{
+      --bg:#0b0c10; --panel:#0f1117; --ink:#e8e8f0; --muted:#98a2b3; --brand:#7aa2ff; --line:#1a1f2e; --chip:#161a24;
+      --glow:0 0 0 1px var(--line), 0 10px 30px rgba(0,0,0,.45);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;background:radial-gradient(1200px 800px at 10% -10%, rgba(122,162,255,.08), transparent 60%), radial-gradient(900px 700px at 110% 0%, rgba(255,122,201,.08), transparent 60%), var(--bg); color:var(--ink); font:500 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial}
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:1200px;margin:0 auto;padding:28px}
+
+    /* Header */
+    .nav{display:flex;justify-content:space-between;align-items:center;gap:16px}
+    .brand{display:flex;align-items:center;gap:10px}
+    .logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--brand),#ff7ac9);box-shadow:0 8px 24px rgba(122,162,255,.35)}
+    .name{font-weight:800;letter-spacing:.3px}
+    .cta{display:flex;gap:10px}
+    .btn{padding:10px 14px;border:1px solid var(--line);border-radius:12px;background:linear-gradient(180deg,var(--panel),#0c0e14);box-shadow:var(--glow);color:var(--ink)}
+    .btn:hover{border-color:#2b3145}
+
+    /* Hero */
+    .hero{display:grid;grid-template-columns:1.2fr .8fr;gap:24px;align-items:center;margin:28px 0}
+    .hero h1{font-size:40px;line-height:1.1;margin:0}
+    .hero p{color:var(--muted);margin:10px 0 0}
+    .hero .panel{padding:18px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(180deg,var(--panel),#0c0e14);box-shadow:var(--glow)}
+    @media (max-width:900px){.hero{grid-template-columns:1fr}}
+
+    /* Filters */
+    .filters{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0}
+    .chip{padding:8px 12px;border:1px solid var(--line);border-radius:999px;background:var(--chip);color:var(--muted);cursor:pointer}
+    .chip[aria-pressed="true"]{background:#192038;color:var(--ink);border-color:#2b3145}
+
+    /* Gallery */
+    .grid{display:grid;grid-template-columns:repeat(1,minmax(0,1fr));gap:14px}
+    @media (min-width:700px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media (min-width:1040px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+    .card{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:16px;background:linear-gradient(180deg,var(--panel),#0c0e14);box-shadow:var(--glow)}
+    .thumb{aspect-ratio:16/9;background:#0c0f16;display:block;width:100%;object-fit:cover}
+    .card .body{padding:12px 14px}
+    .title{font-weight:700;font-size:16px;margin:0}
+    .meta{color:var(--muted);font-size:13px;margin-top:6px;display:flex;gap:8px;flex-wrap:wrap}
+    .tag{border:1px solid var(--line);padding:2px 8px;border-radius:999px}
+    .launch{position:absolute;right:10px;top:10px;background:#0b0e16ad;border:1px solid var(--line);padding:6px 10px;border-radius:10px;font-size:12px}
+    .launch:hover{border-color:#2b3145}
+
+    /* Lightbox */
+    dialog{max-width:min(1080px,90vw);width:100%;border:1px solid var(--line);border-radius:16px;background:linear-gradient(180deg,var(--panel),#0c0e14);color:var(--ink);padding:0;box-shadow:0 20px 80px rgba(0,0,0,.6)}
+    dialog::backdrop{background:rgba(0,0,0,.6)}
+    .lb-media{width:100%;aspect-ratio:16/9;background:#0c0f16;display:flex;align-items:center;justify-content:center}
+    .lb-media img,.lb-media video{width:100%;height:100%;object-fit:cover}
+    .lb-body{padding:16px;border-top:1px solid var(--line)}
+    .lb-title{font-weight:800}
+    .lb-desc{color:var(--muted);margin-top:6px}
+    .lb-actions{display:flex;gap:10px;margin-top:12px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <nav class="nav">
+      <div class="brand"><div class="logo"></div><div class="name">Andy Tu</div></div>
+      <div class="cta">
+        <a class="btn" href="/" rel="home">Home</a>
+        <a class="btn" href="https://github.com/" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="btn" href="mailto:hello@andyhtu.com">Contact</a>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <div>
+        <h1>AI Work — Films, Influencers, Creative Tech</h1>
+        <p>Selected experiments and projects across AI film pipelines, influencer systems, and creative advertising. Short, visual, and to the point.</p>
+        <div class="filters" id="filters"></div>
+      </div>
+      <div class="panel">
+        <strong>How to use</strong>
+        <ol style="margin:8px 0 0; padding-left:18px; color:var(--muted)">
+          <li>Click any card to view media and details.</li>
+          <li>Use filter chips to narrow by category.</li>
+          <li>Open the ↗ link for external demos (YouTube, GitHub, etc.).</li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="grid" id="grid"></section>
+  </div>
+
+  <dialog id="lightbox">
+    <div class="lb-media" id="lbMedia"></div>
+    <div class="lb-body">
+      <div class="lb-title" id="lbTitle"></div>
+      <div class="lb-desc" id="lbDesc"></div>
+      <div class="lb-actions" id="lbActions"></div>
+    </div>
+  </dialog>
+
+  <script>
+    // === Minimal data-driven portfolio ===
+    // Replace these with your real items. Media can be image or MP4 (self-hosted or CDN).
+    // For YouTube, set media="youtube" and provide youtubeId.
+    const ITEMS = [
+      {
+        title: "Asami — AI Singer Reel",
+        tags: ["AI Influencer","Music","Shorts"],
+        poster: "https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1200&auto=format&fit=crop", // placeholder
+        media: "image", // image | video | youtube
+        src: "https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1200&auto=format&fit=crop",
+        desc: "A quick reel demonstrating the Asami character: voice sync tests, motion loops, and UGC-style camera framing.",
+        links: [{label:"GitHub", href:"https://github.com/"},{label:"Demo", href:"#"}]
+      },
+      {
+        title: "AI Film Pipeline — Test 02",
+        tags: ["AI Film","Workflow","Storyboard"],
+        poster: "https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=1200&auto=format&fit=crop",
+        media: "video",
+        src: "https://upload.wikimedia.org/wikipedia/commons/transcoded/7/77/Big_Buck_Bunny_full_movie.ogv/Big_Buck_Bunny_full_movie.ogv.240p.ogv",
+        desc: "End-to-end test: prompt → animation → compositing. Notes on start/end-frame continuity and texture carry-over.",
+        links: [{label:"Process Notes", href:"#"}]
+      },
+      {
+        title: "Influencer Network — Auto Cutdowns",
+        tags: ["Automation","Growth","AI Influencer"],
+        poster: "https://images.unsplash.com/photo-1518779578993-ec3579fee39f?q=80&w=1200&auto=format&fit=crop",
+        media: "image",
+        src: "https://images.unsplash.com/photo-1518779578993-ec3579fee39f?q=80&w=1200&auto=format&fit=crop",
+        desc: "Agent-driven cutdowns for Shorts/Reels: beat-detect, caption pass, and safe-crop for faces/logos.",
+        links: [{label:"GitHub", href:"https://github.com/"}]
+      },
+      {
+        title: "City of Dolls — Character Loop",
+        tags: ["AI Film","Character","Loop"],
+        poster: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=1200&auto=format&fit=crop",
+        media: "image",
+        src: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=1200&auto=format&fit=crop",
+        desc: "Motion loop test with handheld jitter and VHS texture. 10s seamless loop for social.",
+        links: [{label:"YouTube", href:"#"}]
+      }
+    ];
+
+    // Build filter list from tags
+    const ALL_TAGS = Array.from(new Set(ITEMS.flatMap(i=>i.tags))).sort();
+    const active = new Set();
+
+    const $ = (id)=>document.getElementById(id);
+    const filtersRoot = $("filters");
+    const gridRoot = $("grid");
+    const dialog = $("lightbox");
+    const lbMedia = $("lbMedia");
+    const lbTitle = $("lbTitle");
+    const lbDesc = $("lbDesc");
+    const lbActions = $("lbActions");
+
+    function renderFilters(){
+      const chips = [`<button class="chip" data-tag="__all" aria-pressed="${active.size?"false":"true"}">All</button>`]
+        .concat(ALL_TAGS.map(t=>`<button class="chip" data-tag="${t}" aria-pressed="${active.has(t)}">${t}</button>`));
+      filtersRoot.innerHTML = chips.join("");
+      filtersRoot.querySelectorAll('.chip').forEach(btn=>{
+        btn.addEventListener('click',()=>{
+          const tag = btn.dataset.tag;
+          if(tag==='__all'){ active.clear(); } else { if(active.has(tag)) active.delete(tag); else active.add(tag); }
+          renderFilters();
+          renderGrid();
+        });
+      });
+    }
+
+    function matchActive(item){
+      if(active.size===0) return true;
+      return item.tags.some(t=>active.has(t));
+    }
+
+    function cardHTML(item, idx){
+      return `
+        <article class="card" data-idx="${idx}">
+          <a class="launch" href="${(item.links?.[0]?.href)||'#'}" ${item.links?.[0]?.href? 'target="_blank" rel="noreferrer"':''}>↗</a>
+          <img class="thumb" loading="lazy" alt="${item.title}" src="${item.poster}" />
+          <div class="body">
+            <h3 class="title">${item.title}</h3>
+            <div class="meta">${item.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+          </div>
+        </article>`;
+    }
+
+    function renderGrid(){
+      const list = ITEMS.filter(matchActive);
+      gridRoot.innerHTML = list.map((it, i)=> cardHTML(it, i)).join('');
+      gridRoot.querySelectorAll('.card').forEach(card=>{
+        card.addEventListener('click', (e)=>{
+          // Avoid opening lightbox if ↗ link clicked
+          if(e.target.closest('.launch')) return;
+          const idx = Number(card.dataset.idx);
+          openLightbox(ITEMS.filter(matchActive)[idx]);
+        });
+      });
+    }
+
+    function openLightbox(item){
+      lbMedia.innerHTML = '';
+      if(item.media==='video'){
+        const v = document.createElement('video');
+        v.src = item.src; v.controls = true; v.playsInline = true; lbMedia.appendChild(v);
+      } else if(item.media==='youtube'){
+        const iframe = document.createElement('iframe');
+        iframe.width='100%'; iframe.height='100%'; iframe.allow='autoplay; encrypted-media'; iframe.allowFullscreen = true;
+        iframe.src = `https://www.youtube.com/embed/${item.youtubeId}?rel=0`;
+        lbMedia.appendChild(iframe);
+      } else { // image
+        const img = document.createElement('img'); img.src = item.src; img.alt = item.title; lbMedia.appendChild(img);
+      }
+      lbTitle.textContent = item.title;
+      lbDesc.textContent = item.desc || '';
+      lbActions.innerHTML = (item.links||[]).map(l=>`<a class="btn" href="${l.href}" target="_blank" rel="noreferrer">${l.label}</a>`).join('');
+
+      dialog.showModal();
+    }
+
+    // Close modal on backdrop click or ESC
+    dialog.addEventListener('click', (e)=>{ if(e.target === dialog) dialog.close(); });
+    window.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && dialog.open) dialog.close(); });
+
+    renderFilters();
+    renderGrid();
+  </script>
+</body>
+</html>
