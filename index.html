@@ -3,84 +3,141 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AI Tools & Repos — by Andy Tu</title>
-  <meta name="description" content="A curated hub of AI tools I use and the repositories I build — for AI films, creative advertising, and influencer systems." />
+  <title>AI Tools & Repositories — Andy Tu</title>
+  <meta name="description" content="A curated hub of AI tools I use and code I build for AI films, creative advertising, and influencer systems." />
   <style>
     :root{
-:root{
-:root{
-  /* theme colors here */
-  --bg:#0a0b10;
-  --panel:#101320;
-  --panel2:#0c0f1a;
-  --ink:#e9e9ef;
-  --muted:#9aa0a6;
-  --line:#1b2030;
-  --brand:#7aa2ff;
-  --brand2:#ff7ac9;
-  --chip:#15192a;
-}
+      /* Base */
+      --bg:#0a0b10;
+      --panel:#101320;
+      --panel2:#0c0f1a;
+      --ink:#e9e9ef;
+      --muted:#9aa0a6;
+      --line:#1b2030;
 
-*{box-sizing:border-box}
-html,body{height:100%}
-body{
-  margin:0;
-  background:radial-gradient(1200px 800px at 10% -10%, rgba(122,162,255,.10), transparent 60%),
-             radial-gradient(900px 700px at 110% 0%, rgba(255,122,201,.10), transparent 60%),
-             var(--bg);
-  color:var(--ink);
-  font:500 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-}
-a{color:inherit;text-decoration:none}
-.wrap{max-width:1200px;margin:0 auto;padding:28px}
+      /* Accents */
+      --brand:#7aa2ff;   /* electric blue */
+      --brand2:#ff7ac9;  /* neon pink */
 
-/* Add your glow effect here 👇 */
-.btn, .card {
-  box-shadow: 0 0 0 1px var(--line), 0 12px 30px rgba(0,0,0,.45);
-}
+      /* Chips / pill background */
+      --chip:#15192a;
+    }
 
-    /* Nav */
-    .nav{display:flex;justify-content:space-between;align-items:center}
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background:
+        radial-gradient(1200px 800px at 10% -10%, rgba(122,162,255,.10), transparent 60%),
+        radial-gradient(900px 700px at 110% 0%, rgba(255,122,201,.10), transparent 60%),
+        var(--bg);
+      color:var(--ink);
+      font:500 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+    }
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:1200px;margin:0 auto;padding:28px}
+
+    /* ---------- Micro animations ---------- */
+    @keyframes neonPulse {
+      from { box-shadow: 0 0 0 1px var(--line), 0 12px 30px rgba(0,0,0,.45); }
+      to   { box-shadow: 0 0 0 1px color-mix(in srgb, var(--brand) 40%, var(--line)), 0 18px 40px rgba(0,0,0,.55); }
+    }
+
+    /* ---------- Nav ---------- */
+    .nav{display:flex;justify-content:space-between;align-items:center;gap:16px}
     .brand{display:flex;align-items:center;gap:10px}
-    .logo{width:38px;height:38px;border-radius:12px;background:conic-gradient(from 180deg, var(--brand), var(--brand2), var(--brand)); box-shadow:0 10px 30px rgba(122,162,255,.35)}
+    .logo{
+      width:38px;height:38px;border-radius:12px;
+      background:conic-gradient(from 180deg, var(--brand), var(--brand2), var(--brand));
+      box-shadow:0 10px 30px rgba(122,162,255,.35);
+    }
     .name{font-weight:800;letter-spacing:.3px}
     .links{display:flex;gap:10px}
-    .btn{padding:10px 14px;border:1px solid var(--line);border-radius:12px;background:linear-gradient(180deg,var(--panel),var(--panel2));color:var(--ink)}
-    .btn:hover{border-color:#2b3145}
 
-    /* Hero */
+    .btn{
+      padding:10px 14px;border:1px solid var(--line);border-radius:12px;
+      background:linear-gradient(180deg,var(--panel),var(--panel2));
+      color:var(--ink);
+      box-shadow: 0 0 0 1px var(--line), 0 12px 30px rgba(0,0,0,.45);
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease, background-color .18s ease;
+      will-change: transform, box-shadow;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      border-color:#2b3145;
+      animation: neonPulse 1s ease-in-out alternate infinite;
+    }
+    .btn:active{
+      transform: translateY(0);
+      animation:none;
+      box-shadow: 0 0 0 1px var(--line), 0 8px 20px rgba(0,0,0,.45);
+    }
+
+    /* ---------- Hero ---------- */
     .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:center;margin:28px 0}
     .hero h1{font-size:42px;line-height:1.1;margin:0}
     .hero p{color:var(--muted);margin:10px 0 0}
-    .glass{padding:18px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(180deg,var(--panel),var(--panel2));box-shadow:0 0 0 1px var(--line), 0 12px 30px rgba(0,0,0,.45)}
+    .glass{
+      padding:18px;border:1px solid var(--line);border-radius:16px;
+      background:linear-gradient(180deg,var(--panel),var(--panel2));
+      box-shadow: 0 0 0 1px var(--line), 0 12px 30px rgba(0,0,0,.45);
+    }
     @media (max-width:900px){.hero{grid-template-columns:1fr}}
 
-    /* Sections */
+    /* ---------- Filters ---------- */
+    .filters{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0}
+    .chip{
+      padding:8px 12px;border:1px solid var(--line);border-radius:999px;
+      background:var(--chip);color:var(--muted);cursor:pointer;
+      transition: background .18s ease, border-color .18s ease, color .18s ease, transform .18s ease;
+    }
+    .chip[aria-pressed="true"]{background:#192038;color:var(--ink);border-color:#2b3145}
+    .chip:hover{transform:translateY(-1px);}
+
+    /* ---------- Sections / grids ---------- */
     h2{font-size:22px;margin:18px 0}
     .grid{display:grid;grid-template-columns:repeat(1,minmax(0,1fr));gap:14px}
     @media(min-width:740px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
     @media(min-width:1040px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 
-    .card{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:16px;background:linear-gradient(180deg,var(--panel),var(--panel2));box-shadow:0 0 0 1px var(--line), 0 10px 26px rgba(0,0,0,.38)}
+    .card{
+      position:relative;overflow:hidden;border:1px solid var(--line);border-radius:16px;
+      background:linear-gradient(180deg,var(--panel),var(--panel2));
+      box-shadow: 0 0 0 1px var(--line), 0 12px 30px rgba(0,0,0,.45);
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+      will-change: transform, box-shadow;
+    }
+    .card:hover{
+      transform: translateY(-3px);
+      border-color:#2b3145;
+      animation: neonPulse .9s ease-in-out alternate infinite;
+    }
+    .thumb{aspect-ratio:16/9;background:#0c0f16;display:block;width:100%;object-fit:cover}
     .card .body{padding:14px}
     .title{font-weight:800;font-size:16px;margin:0}
     .meta{color:var(--muted);font-size:13px;margin-top:6px;display:flex;gap:8px;flex-wrap:wrap}
     .tag{border:1px solid var(--line);padding:2px 8px;border-radius:999px}
-    .thumb{aspect-ratio:16/9;background:#0c0f16;display:block;width:100%;object-fit:cover}
-    .launch{position:absolute;right:10px;top:10px;background:#0b0e16ad;border:1px solid var(--line);padding:6px 10px;border-radius:10px;font-size:12px}
 
-    .filters{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0}
-    .chip{padding:8px 12px;border:1px solid var(--line);border-radius:999px;background:#15192a;color:var(--muted);cursor:pointer}
-    .chip[aria-pressed="true"]{background:#192038;color:var(--ink);border-color:#2b3145}
+    .launch{
+      position:absolute;right:10px;top:10px;
+      background:#0b0e16ad;border:1px solid var(--line);padding:6px 10px;border-radius:10px;font-size:12px
+    }
+    .launch:hover{border-color:#2b3145}
 
     footer{margin:28px 0;color:var(--muted);text-align:center}
 
-    /* Lightbox */
-    dialog{max-width:min(1100px,92vw);width:100%;border:1px solid var(--line);border-radius:16px;background:linear-gradient(180deg,var(--panel),var(--panel2));color:var(--ink);padding:0;box-shadow:0 20px 80px rgba(0,0,0,.6)}
+    /* ---------- Lightbox ---------- */
+    dialog{
+      max-width:min(1100px,92vw);width:100%;
+      border:1px solid var(--line);border-radius:16px;
+      background:linear-gradient(180deg,var(--panel),var(--panel2));color:var(--ink);padding:0;
+      box-shadow:0 20px 80px rgba(0,0,0,.6)
+    }
     dialog::backdrop{background:rgba(0,0,0,.6)}
     .lb-media{width:100%;aspect-ratio:16/9;background:#0c0f16;display:flex;align-items:center;justify-content:center}
     .lb-media img,.lb-media video{width:100%;height:100%;object-fit:cover}
     .lb-body{padding:16px;border-top:1px solid var(--line)}
+    .lb-actions{display:flex;gap:10px;margin-top:12px}
   </style>
 </head>
 <body>
@@ -88,7 +145,7 @@ a{color:inherit;text-decoration:none}
     <nav class="nav">
       <div class="brand"><div class="logo"></div><div class="name">Andy Tu</div></div>
       <div class="links">
-        <a class="btn" href="https://andyhtu.com/AI-Films/" target="_blank" rel="noreferrer">AI‑Films</a>
+        <a class="btn" href="https://andyhtu.com/AI-Films/" target="_blank" rel="noreferrer">AI-Films</a>
         <a class="btn" href="https://github.com/AndyHTu" target="_blank" rel="noreferrer">GitHub</a>
         <a class="btn" href="mailto:hello@andyhtu.com">Contact</a>
       </div>
@@ -102,7 +159,7 @@ a{color:inherit;text-decoration:none}
       </div>
       <div class="glass">
         <strong>What is this?</strong>
-        <p style="margin:.4rem 0 0; color:var(--muted)">A simple landing page for recruiters and collaborators: the <em>tools</em> that power my workflow and the <em>repos</em> I publish. Edit one config block to make it yours.</p>
+        <p style="margin:.4rem 0 0; color:var(--muted)">A simple landing page for collaborators: the <em>tools</em> that power my workflow and the <em>repos</em> I publish. Edit one config block to make it yours.</p>
       </div>
     </section>
 
@@ -122,22 +179,28 @@ a{color:inherit;text-decoration:none}
     </footer>
   </div>
 
-  <dialog id="lightbox"><div class="lb-media" id="lbMedia"></div><div class="lb-body"><div id="lbTitle" style="font-weight:800"></div><div id="lbDesc" style="color:var(--muted);margin-top:6px"></div><div id="lbLinks" style="display:flex;gap:10px;margin-top:12px"></div></div></dialog>
+  <dialog id="lightbox">
+    <div class="lb-media" id="lbMedia"></div>
+    <div class="lb-body">
+      <div id="lbTitle" style="font-weight:800"></div>
+      <div id="lbDesc" style="color:var(--muted);margin-top:6px"></div>
+      <div class="lb-actions" id="lbLinks"></div>
+    </div>
+  </dialog>
 
   <script>
     // ================== CONFIG (edit these) ==================
     const CONFIG = {
-      GITHUB_USERNAME: "AndyHTu", // ← change if needed
+      GITHUB_USERNAME: "AndyHTu",
       SITE_TITLE: "AI Tools & Repositories",
       SITE_TAGLINE: "A curated hub of tools I use and code I build for AI films, creative advertising, and influencer systems.",
-      // List your core tools (feel free to replace/extend)
       TOOLS: [
-        { title: "Kling 2.x", tags:["Video","GenAI"], poster:"https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?q=80&w=1200&auto=format&fit=crop", desc:"High‑quality text‑to‑video tests and start/end frame techniques.", links:[{label:"Notes", href:"https://andyhtu.com/AI-Films/"}] },
-        { title: "Midjourney", tags:["Images","Style"], poster:"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop", desc:"Character look dev, Omni‑Ref pipelines, and re‑texturing passes.", links:[{label:"Guide", href:"https://andyhtu.com/AI-Films/"}] },
+        { title: "Kling 2.x", tags:["Video","GenAI"], poster:"https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?q=80&w=1200&auto=format&fit=crop", desc:"High-quality text-to-video tests and start/end frame techniques.", links:[{label:"Notes", href:"https://andyhtu.com/AI-Films/"}] },
+        { title: "Midjourney", tags:["Images","Style"], poster:"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop", desc:"Character look-dev, Omni-Ref pipelines, and re-texturing passes.", links:[{label:"Guide", href:"https://andyhtu.com/AI-Films/"}] },
         { title: "Leonardo / Flux", tags:["Upscale","Images"], poster:"https://images.unsplash.com/photo-1482192596544-9eb780fc7f66?q=80&w=1200&auto=format&fit=crop", desc:"Texture realism, skin detail, and turnarounds.", links:[{label:"Examples", href:"https://andyhtu.com/AI-Films/"}] },
-        { title: "Runway Gen‑4", tags:["Video","Edit"], poster:"https://images.unsplash.com/photo-1526318472351-c75fcf070305?q=80&w=1200&auto=format&fit=crop", desc:"Cutdowns, inpainting, and continuity notes.", links:[{label:"Demo", href:"https://andyhtu.com/AI-Films/"}] },
-        { title: "Krea / OmniHuman‑1", tags:["Lip‑sync","UGC"], poster:"https://images.unsplash.com/photo-1520975937866-70c7c2a1f94c?q=80&w=1200&auto=format&fit=crop", desc:"UGC‑style vocal sync, handheld framing, captions.", links:[{label:"Tests", href:"https://andyhtu.com/AI-Films/"}] },
-        { title: "Pinokio", tags:["Pipelines","Open‑source"], poster:"https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop", desc:"Local orchestration of multi‑tool workflows.", links:[{label:"Setup", href:"https://andyhtu.com/AI-Films/"}] },
+        { title: "Runway Gen-4", tags:["Video","Edit"], poster:"https://images.unsplash.com/photo-1526318472351-c75fcf070305?q=80&w=1200&auto=format&fit=crop", desc:"Cutdowns, inpainting, and continuity notes.", links:[{label:"Demo", href:"https://andyhtu.com/AI-Films/"}] },
+        { title: "Krea / OmniHuman-1", tags:["Lip-sync","UGC"], poster:"https://images.unsplash.com/photo-1520975937866-70c7c2a1f94c?q=80&w=1200&auto=format&fit=crop", desc:"UGC-style vocal sync, handheld framing, captions.", links:[{label:"Tests", href:"https://andyhtu.com/AI-Films/"}] },
+        { title: "Pinokio", tags:["Pipelines","Open-source"], poster:"https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop", desc:"Local orchestration of multi-tool workflows.", links:[{label:"Setup", href:"https://andyhtu.com/AI-Films/"}] }
       ]
     };
     // ========================================================
@@ -159,13 +222,13 @@ a{color:inherit;text-decoration:none}
         btn.addEventListener('click',()=>{
           const tag = btn.dataset.tag;
           if(tag==='__all'){ active.clear(); }
-          else { if(active.has(tag)) active.delete(tag); else active.add(tag); }
+          else { active.has(tag) ? active.delete(tag) : active.add(tag); }
           renderFilters(); renderTools();
         });
       });
     }
 
-    function matchActive(item){ if(active.size===0) return true; return item.tags.some(t=>active.has(t)); }
+    function matchActive(item){ return active.size===0 || item.tags.some(t=>active.has(t)); }
 
     function toolCard(t){
       return `
@@ -221,6 +284,36 @@ a{color:inherit;text-decoration:none}
       }
     }
 
+    // Lightbox
+    const dialog = $("lightbox");
+    const lbMedia = $("lbMedia");
+    const lbTitle = $("lbTitle");
+    const lbDesc  = $("lbDesc");
+    const lbLinks = $("lbLinks");
+
+    // Open lightbox for Tools (click any card except the ↗ link)
+    document.addEventListener('click', (e)=>{
+      const card = e.target.closest('.card');
+      if(!card) return;
+      if(e.target.closest('.launch')) return; // let launch link work normally
+
+      // Determine if clicked card is in toolsGrid or reposGrid
+      if(card.parentElement && card.parentElement.id === "toolsGrid"){
+        const idx = Array.from(card.parentElement.children).indexOf(card);
+        const item = CONFIG.TOOLS.filter(matchActive)[idx];
+        if(!item) return;
+        lbMedia.innerHTML = `<img src="${item.poster}" alt="${item.title}">`;
+        lbTitle.textContent = item.title;
+        lbDesc.textContent  = item.desc || "";
+        lbLinks.innerHTML   = (item.links||[]).map(l=>`<a class="btn" href="${l.href}" target="_blank" rel="noreferrer">${l.label}</a>`).join('');
+        dialog.showModal();
+      }
+    });
+
+    dialog.addEventListener('click', (e)=>{ if(e.target === dialog) dialog.close(); });
+    window.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && dialog.open) dialog.close(); });
+
+    // Init
     renderFilters();
     renderTools();
     renderRepos();
